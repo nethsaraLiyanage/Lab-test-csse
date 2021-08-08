@@ -1,3 +1,4 @@
+package service;
 
 
 import org.xml.sax.SAXException;
@@ -16,9 +17,9 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Map;
 
-public class a extends c1 {
+public class employeeService extends CommonUtil {
 
-	private final ArrayList<b> el = new ArrayList<b>();
+	private final ArrayList<Employee> el = new ArrayList<Employee>();
 
 	private static Connection c;
 
@@ -26,7 +27,7 @@ public class a extends c1 {
 
 	private PreparedStatement ps;
 
-	public a() {
+	public employeeService() {
 		try {
 			Class.forName("com.mysql.jdbc.Driver");
 			c = DriverManager.getConnection(p.getProperty("url"), p.getProperty("username"),
@@ -38,10 +39,10 @@ public class a extends c1 {
 	public void a2() {
 
 		try {
-			int s = c3.XMLXPATHS().size();
+			int s = TransformUtil.XMLXPATHS().size();
 			for (int i = 0; i < s; i++) {
-				Map<String, String> l = c3.XMLXPATHS().get(i);
-				b EMPLOYEE = new b();
+				Map<String, String> l = TransformUtil.XMLXPATHS().get(i);
+				Employee EMPLOYEE = new Employee();
 				EMPLOYEE.eMPLOYEEiD(l.get("XpathEmployeeIDKey"));
 				EMPLOYEE.fULLnAME(l.get("XpathEmployeeNameKey"));
 				EMPLOYEE.aDDRESS(l.get("XpathEmployeeAddressKey"));
@@ -58,18 +59,18 @@ public class a extends c1 {
 	public void a3() {
 		try {
 			s = c.createStatement();
-			s.executeUpdate(c2.Q("q2"));
-			s.executeUpdate(c2.Q("q1"));
+			s.executeUpdate(QueryUtil.Q("q2"));
+			s.executeUpdate(QueryUtil.Q("q1"));
 		} catch (Exception e) {
 		}
 	}
 
 	public void a4() {
 		try {
-			ps = c.prepareStatement(c2.Q("q3"));
+			ps = c.prepareStatement(QueryUtil.Q("q3"));
 			c.setAutoCommit(false);
 			for(int i = 0; i < el.size(); i++){
-				b e = el.get(i);
+				Employee e = el.get(i);
 				ps.setString(1, e.EMPLOYEEiDgET());
 				ps.setString(2, e.fULLnAMEgET());
 				ps.setString(3, e.aDDRESSgET());
@@ -86,9 +87,9 @@ public class a extends c1 {
 
 	public void eMPLOYEEGETBYID(String eid) {
 
-		b e = new b();
+		Employee e = new Employee();
 		try {
-			ps = c.prepareStatement(c2.Q("q4"));
+			ps = c.prepareStatement(QueryUtil.Q("q4"));
 			ps.setString(1, eid);
 			ResultSet R = ps.executeQuery();
 			while (R.next()) {
@@ -99,7 +100,7 @@ public class a extends c1 {
 				e.dEPARTMENT(R.getString(5));
 				e.dESIGNATION(R.getString(6));
 			}
-			ArrayList<b> l = new ArrayList<b>();
+			ArrayList<Employee> l = new ArrayList<Employee>();
 			l.add(e);
 			eMPLOYEEoUTPUT(l);
 		} catch (Exception ex) {
@@ -109,7 +110,7 @@ public class a extends c1 {
 	public void EMPLOYEEDELETE(String eid) {
 
 		try {
-			ps = c.prepareStatement(c2.Q("q6"));
+			ps = c.prepareStatement(QueryUtil.Q("q6"));
 			ps.setString(1, eid);
 			ps.executeUpdate();
 		} catch (Exception e) {
@@ -119,12 +120,12 @@ public class a extends c1 {
 
 	public void a5() {
 
-		ArrayList<b> l = new ArrayList<b>();
+		ArrayList<Employee> l = new ArrayList<Employee>();
 		try {
-			ps = c.prepareStatement(c2.Q("q5"));
+			ps = c.prepareStatement(QueryUtil.Q("q5"));
 			ResultSet r = ps.executeQuery();
 			while (r.next()) {
-				b e = new b();
+				Employee e = new Employee();
 				e.eMPLOYEEiD(r.getString(1));
 				e.fULLnAME(r.getString(2));
 				e.aDDRESS(r.getString(3));
@@ -138,14 +139,14 @@ public class a extends c1 {
 		eMPLOYEEoUTPUT(l);
 	}
 	
-	public void eMPLOYEEoUTPUT(ArrayList<b> l){
+	public void eMPLOYEEoUTPUT(ArrayList<Employee> l){
 		
 		System.out.println("Employee ID" + "\t\t" + "Full Name" + "\t\t" + "Address" + "\t\t" + "Faculty Name" + "\t\t"
 				+ "Department" + "\t\t" + "Designation" + "\n");
 		System.out
 				.println("================================================================================================================");
 		for(int i = 0; i < l.size(); i++){
-			b e = l.get(i);
+			Employee e = l.get(i);
 			System.out.println(e.EMPLOYEEiDgET() + "\t" + e.fULLnAMEgET() + "\t\t"
 					+ e.aDDRESSgET() + "\t" + e.fACULTYnAMEgET() + "\t" + e.dEPARTMENTgET() + "\t"
 					+ e.dESIGNATIONgET() + "\n");

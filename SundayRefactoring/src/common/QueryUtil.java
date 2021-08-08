@@ -1,3 +1,4 @@
+package common;
 
 
 import javax.xml.transform.TransformerFactoryConfigurationError;
@@ -11,7 +12,7 @@ import javax.xml.parsers.ParserConfigurationException;
 import org.w3c.dom.Element;
 import javax.xml.transform.TransformerConfigurationException;
 
-public class c2 extends c1 {
+public class QueryUtil extends CommonUtil {
 	
 	public static String Q(String id) throws Exception {
 		NodeList n; Element e = null;
